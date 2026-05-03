@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Study Timer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body> <div class="main-wrapper">
+
+        <div class="container">
+            <h1>Smart Study Timer</h1>
+            
+            <div class="input-area">
+                <input type="text" id="subject-input" placeholder="勉強する科目を入力">
+            </div>
+
+            <div class="timer-display">
+                <span id="time-display">25:00</span>
+            </div>
+
+            <div class="controls">
+                <button id="start-btn">START</button>
+                <button id="stop-btn">STOP</button>
+                <button id="reset-btn">RESET</button>
+            </div>
+            </div>
+
+        <div class="log-section">
+            <h2>学習ログ</h2>
+            <ul id="log-list"></ul> 
+        </div>
+
+    </div> <script src="app.js"></script>
+</body>
+</html>

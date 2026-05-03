@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    platform: linux/x86_64
+    environment:
+      MYSQL_ROOT_PASSWORD: root    # パスワードは "root"
+      MYSQL_DATABASE: study_timer  # DB名は "study_timer"
+    ports:
+      - "3306:3306"                # PCの3306番ポートを使う
+

@@ -1,0 +1,71 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding: 20px;
+} /* ⬅︎ ここで body を閉じる（OK！） */
+
+/* 親玉（全体を包む枠） */
+.main-wrapper {
+    display: flex;       /* 横並びになれ！ */
+    gap: 30px;           /* タイマーとログの間隔 */
+    justify-content: center; /* 真ん中に寄せる */
+    align-items: flex-start; /* 上揃えにする */
+    flex-wrap: wrap; /* スマホで狭くなったら縦並びにする */
+}
+
+/* 左側：タイマーエリア */
+.container {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 300px;
+}
+
+/* 右側：ログエリア */
+.log-section {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    min-width: 250px;
+    min-height: 300px;
+}
+
+/* ▼ 修正箇所：重複していたのを整理しました ▼ */
+.timer-display {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #333;
+    margin: 20px 0;
+}
+
+/* その他パーツのデザイン */
+input {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 80%;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button#stop-btn {
+    background-color: #dc3545;
+}
