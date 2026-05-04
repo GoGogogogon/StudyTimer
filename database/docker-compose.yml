@@ -11,7 +11,7 @@
 			"    environment:",
 			"      MYSQL_ROOT_USER: \\${ROOTUSER}",
 			"      MYSQL_ROOT_PASSWORD: \\${ROOTPASS}",
-			"      MYSQL_DATABASE: \\${DATABASE}",
+			"      MYSQL_DATABASE: \\${DB}",
 			"      MYSQL_USER: \\${USERNAME}",
 			"      MYSQL_PASSWORD: \\${USERPASS}",
 			"      TZ: \"Asia/Tokyo\"",

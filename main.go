@@ -7,23 +7,23 @@ import (
 	"log"
 	"net/http"
 	"time"
-
+	"os"
 	_ "github.com/go-sql-driver/mysql"
 )
 
-type StudyLog struct {
-	Title string `json:"subject"`
-	Time  int    `json:"study_time"`
+
+
+var {
+	dbUser := os.Getenv()
 }
 
-var db *sql.DB
 
 func main() {
 
-	var err error
+
 	dsn := "root:root@tcp(127.0.0.1:3306)/study_timer"
 
-	db, err = sql.Open("mysql", dsn)
+	db, err := sql.Open("mysql", dsn)
 
 	if err != nil {
 		log.Fatal("設定エラー：", err)
@@ -45,13 +45,6 @@ func main() {
 	}
 
 	fmt.Println("接続成功しました")
-
-	const createTableSQL = `CREATE TABLE IF NOT EXISTS study_logs (
-        id          INT AUTO_INCREMENT PRIMARY KEY, 
-        subject     VARCHAR(255) NOT NULL,
-        study_time  INT NOT NULL,
-        created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
-    );`
 
 	_, err = db.Exec(createTableSQL)
 	if err != nil {
