@@ -2,20 +2,20 @@ package controller
 
 import (
 	"SmartStudyTimer/model"
-	"database/sql"
+	"SmartStudyTimer/service"
 	"encoding/json"
 	"net/http"
 )
 
-type TimerController struct {
-	db *sql.DB
+type StudyTimerController struct {
+	service service.MyStudyService
 }
 
-func NewTimerService(db *sql.DB) *TimerController {
-	return &TimerController{db: db}
+func NewStudyTimerController(s service.MyStudyService) *StudyTimerController {
+	return &StudyTimerController{service: s}
 }
 
-func (c *TimerController) SaveHandler(w http.ResponseWriter, r *http.Request) {
+func (c *StudyTimerController) SaveHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != http.MethodPost {
 		http.Error(w, "POST以外は受け取りません", http.StatusMethodNotAllowed)

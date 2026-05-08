@@ -18,7 +18,7 @@ var (
 
 	dbpass = os.Getenv("USERPASS")
 
-	dbConn = fmt.Sprintf("%s:%s@tcp(127.0.0.3306)%s?parseTime=true", db, dbUser, dbpass)
+	dbConn = fmt.Sprintf("%s:%s@tcp(127.0.0.3306)%s?parseTime=true", dbname, dbUser, dbpass)
 )
 
 func main() {
