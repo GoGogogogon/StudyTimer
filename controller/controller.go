@@ -26,13 +26,14 @@ func (c *StudyTimerController) SaveContnroller(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	StudyLog, err := c.service.PostStudyLogService(reqdata)
+	studyLog, err := c.service.PostStudyLogService(reqdata)
 
 	if err != nil {
 		http.Error(w, "データ内部に入れませんでした", http.StatusInternalServerError)
+		return
 	}
 
-	json.NewEncoder(w).Encode(StudyLog)
+	json.NewEncoder(w).Encode(studyLog)
 
 }
 
@@ -46,4 +47,12 @@ func (c *StudyTimerController) UpdateController(w http.ResponseWriter, r *http.R
 		return
 	}
 
+	studylog, err := c.service.UpdateStudyLogService(reqdata)
+
+	if err != nil {
+		http.Error(w, "データ内部に入れませんでした", http.StatusInternalServerError)
+		return
+	}
+
+	json.NewEncoder(w).Encode(studylog)
 }
