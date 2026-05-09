@@ -24,5 +24,9 @@ func (s *MyStudyService) PostStudyLogService(log model.StudyLog) (model.StudyLog
 }
 
 func (s *MyStudyService) UpdateStudyLogService(log model.StudyLog) (model.StudyLog, error) {
-
+	newLog, err := repositories.UpdateStudyData(s.db, log)
+	if err != nil {
+		return model.StudyLog{}, err
+	}
+	return newLog, err
 }

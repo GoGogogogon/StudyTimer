@@ -14,10 +14,6 @@ func SaveStudyDate(db *sql.DB, log model.StudyLog) (model.StudyLog, error) {
 	(?,?,now());
 	`
 
-	var Newlog model.StudyLog
-
-	Newlog.Title, Newlog.Time = log.Title, log.Time
-
 	result, err := db.Exec(InsertSQL, log.Title, log.Time)
 
 	//sql.resultはIDのこと
@@ -28,16 +24,22 @@ func SaveStudyDate(db *sql.DB, log model.StudyLog) (model.StudyLog, error) {
 
 	Id, _ := result.LastInsertId()
 
-	Newlog.ID = int(Id)
+	log.ID = int(Id)
 	//IDの自動確保
-	return Newlog, nil
+	return log, nil
 }
 
 func UpdateStudyData(db *sql.DB, log model.StudyLog) (model.StudyLog, error) {
 
 	const updatesql = `
-	update study_logs set subject = ? study_time = ?
+	update study_logs set subject = ? ,study_time = ?
 	where study_id = ? ;`
 
-	result, err := db.Exec(updatesql, log.Title, log.Time)
+	_, err := db.Exec(updatesql, log.Title, log.Time, log.ID)
+
+	if err != nil {
+		return model.StudyLog{}, err
+	}
+
+	return log, nil
 }

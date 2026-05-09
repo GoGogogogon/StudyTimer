@@ -40,7 +40,7 @@ func (c *StudyTimerController) UpdateController(w http.ResponseWriter, r *http.R
 	//誤ってデータを保存したときに値を修正する用
 
 	var reqdata model.StudyLog
-	var id int
+
 	if err := json.NewDecoder(r.Body).Decode(&reqdata); err != nil {
 		http.Error(w, "読み込みエラーが生じました", http.StatusBadRequest)
 		return
