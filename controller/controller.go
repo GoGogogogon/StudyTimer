@@ -1,22 +1,22 @@
 package controller
 
 import (
+	"SmartStudyTimer/controller/service"
 	"SmartStudyTimer/model"
-	"SmartStudyTimer/service"
 	"encoding/json"
 	"net/http"
 	"strconv"
 )
 
 type StudyTimerController struct {
-	service service.MyStudyService
+	service service.MyStudyServicer
 }
 
-func NewStudyTimerController(s service.MyStudyService) *StudyTimerController {
+func NewStudyTimerController(s service.MyStudyServicer) *StudyTimerController {
 	return &StudyTimerController{service: s}
 }
 
-func (c *StudyTimerController) SaveContnroller(w http.ResponseWriter, r *http.Request) {
+func (c *StudyTimerController) SaveController(w http.ResponseWriter, r *http.Request) {
 
 	//データを保存
 
