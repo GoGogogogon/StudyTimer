@@ -17,16 +17,33 @@ func NewStudyTimerController(s service.MyStudyService) *StudyTimerController {
 
 func (c *StudyTimerController) SaveContnroller(w http.ResponseWriter, r *http.Request) {
 
-	if r.Method != http.MethodPost {
-		http.Error(w, "POST以外は受け取りません", http.StatusMethodNotAllowed)
-		return
-	}
+	//データを保存
 
 	var reqdata model.StudyLog
 
 	if err := json.NewDecoder(r.Body).Decode((&reqdata)); err != nil {
 		http.Error(w, "読み込みエラーが生じました", http.StatusBadRequest)
+		return
 	}
+
+	StudyLog, err := c.service.PostStudyLogService(reqdata)
+
+	if err != nil {
+		http.Error(w, "データ内部に入れませんでした", http.StatusInternalServerError)
+	}
+
+	json.NewEncoder(w).Encode(StudyLog)
+
 }
 
-//func UpdateHandler(w http.ResponseWriter, r *http.Request)
+func (c *StudyTimerController) UpdateController(w http.ResponseWriter, r *http.Request) {
+	//誤ってデータを保存したときに値を修正する用
+
+	var reqdata model.StudyLog
+	var id int
+	if err := json.NewDecoder(r.Body).Decode(&reqdata); err != nil {
+		http.Error(w, "読み込みエラーが生じました", http.StatusBadRequest)
+		return
+	}
+
+}

@@ -22,3 +22,7 @@ func (s *MyStudyService) PostStudyLogService(log model.StudyLog) (model.StudyLog
 
 	return newLog, nil
 }
+
+func (s *MyStudyService) UpdateStudyLogService(log model.StudyLog) (model.StudyLog, error) {
+
+}

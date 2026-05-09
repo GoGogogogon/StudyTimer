@@ -32,3 +32,12 @@ func SaveStudyDate(db *sql.DB, log model.StudyLog) (model.StudyLog, error) {
 	//IDの自動確保
 	return Newlog, nil
 }
+
+func UpdateStudyData(db *sql.DB, log model.StudyLog) (model.StudyLog, error) {
+
+	const updatesql = `
+	update study_logs set subject = ? study_time = ?
+	where study_id = ? ;`
+
+	result, err := db.Exec(updatesql, log.Title, log.Time)
+}
