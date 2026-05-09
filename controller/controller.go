@@ -15,7 +15,7 @@ func NewStudyTimerController(s service.MyStudyService) *StudyTimerController {
 	return &StudyTimerController{service: s}
 }
 
-func (c *StudyTimerController) SaveHandler(w http.ResponseWriter, r *http.Request) {
+func (c *StudyTimerController) SaveContnroller(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method != http.MethodPost {
 		http.Error(w, "POST以外は受け取りません", http.StatusMethodNotAllowed)
@@ -27,8 +27,6 @@ func (c *StudyTimerController) SaveHandler(w http.ResponseWriter, r *http.Reques
 	if err := json.NewDecoder(r.Body).Decode((&reqdata)); err != nil {
 		http.Error(w, "読み込みエラーが生じました", http.StatusBadRequest)
 	}
-
-	//data, err = repositories.SaveStudyDate(db)
 }
 
 //func UpdateHandler(w http.ResponseWriter, r *http.Request)

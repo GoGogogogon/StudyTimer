@@ -5,8 +5,9 @@ import (
 	"database/sql"
 )
 
-// 学習データをinsertする関数
 func SaveStudyDate(db *sql.DB, log model.StudyLog) (model.StudyLog, error) {
+
+	// 学習データをinsertする関数
 
 	const InsertSQL = `
 	insert into study_logs (subject,study_time,created_time) values
