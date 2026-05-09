@@ -60,3 +60,32 @@ func DeleteStudyData(db *sql.DB, log model.StudyLog) (model.StudyLog, error) {
 
 	return log, nil
 }
+
+func SelectStudyData(db *sql.DB, log model.StudyLog) (model.StudyLog, error) {
+	//指定したIDのデータを返す関数
+	const selectsql = `
+	select * from study_logs
+	where study_id = ?
+	`
+
+	//指定したIDの一行データ
+	row := db.QueryRow(selectsql, log.ID)
+
+	if err := row.Err(); err != nil {
+		return model.StudyLog{}, err
+	}
+
+	var newlog model.StudyLog
+	var createdtime sql.NullTime
+
+	if err := row.Scan(&log.ID, &log.Title, &log.Time, &createdtime); err != nil {
+		return model.StudyLog{}, err
+	}
+
+	if createdtime.Valid {
+		log.CreatedAt = createdtime.Time
+	}
+
+	return newlog, nil
+
+}

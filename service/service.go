@@ -36,6 +36,13 @@ func (s *MyStudyService) DeleteStudyLogService(log model.StudyLog) (model.StudyL
 	if err != nil {
 		return model.StudyLog{}, err
 	}
+	return newlog, nil
+}
 
+func (s *MyStudyService) SelectStudyLogServicr(log model.StudyLog) (model.StudyLog, error) {
+	newlog, err := repositories.SelectStudyData(s.db, log)
+	if err != nil {
+		return model.StudyLog{}, err
+	}
 	return newlog, nil
 }

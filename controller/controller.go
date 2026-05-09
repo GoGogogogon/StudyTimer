@@ -75,3 +75,23 @@ func (c *StudyTimerController) DeleteController(w http.ResponseWriter, r *http.R
 
 	json.NewEncoder(w).Encode(studylog)
 }
+
+func (c *StudyTimerController) SelectStudyController(w http.ResponseWriter, r *http.Request) {
+
+	var reqdata model.StudyLog
+
+	if err := json.NewDecoder(r.Body).Decode(&reqdata); err != nil {
+		http.Error(w, "読み込みエラーが生じました", http.StatusBadRequest)
+		return
+	}
+
+	studydata, err := c.service.SelectStudyLogServicr(reqdata)
+
+	if err != nil {
+		http.Error(w, "データ内部にアクセスできませんでした", http.StatusInternalServerError)
+		return
+	}
+
+	json.NewEncoder(w).Encode(studydata)
+
+}
