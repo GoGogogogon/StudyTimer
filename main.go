@@ -36,19 +36,10 @@ func main() {
 	}
 
 	r := api.NewRouter(db)
-	// _, err = db.Exec(createTableSQL)
+
 	if err != nil {
 		log.Fatal("テーブル作成失敗:", err)
 	}
-
-	// fmt.Println("テーブル作成成功（もしくはすでにある)")
-
-	// http.HandleFunc("/api/save", saveHandler)
-
-	// fileServer := http.FileServer(http.Dir("./front"))
-	// http.Handle("/", fileServer)
-
-	// fmt.Println("サーバーを起動しました！ http://localhost:8080")
 
 	err = http.ListenAndServe(":8080", r)
 	if err != nil {

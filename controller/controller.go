@@ -5,6 +5,7 @@ import (
 	"SmartStudyTimer/service"
 	"encoding/json"
 	"net/http"
+	"strconv"
 )
 
 type StudyTimerController struct {
@@ -76,7 +77,7 @@ func (c *StudyTimerController) DeleteController(w http.ResponseWriter, r *http.R
 	json.NewEncoder(w).Encode(studylog)
 }
 
-func (c *StudyTimerController) SelectStudyController(w http.ResponseWriter, r *http.Request) {
+func (c *StudyTimerController) SelectStudylogController(w http.ResponseWriter, r *http.Request) {
 
 	var reqdata model.StudyLog
 
@@ -85,7 +86,7 @@ func (c *StudyTimerController) SelectStudyController(w http.ResponseWriter, r *h
 		return
 	}
 
-	studydata, err := c.service.SelectStudyLogServicr(reqdata)
+	studydata, err := c.service.SelectStudyLogService(reqdata)
 
 	if err != nil {
 		http.Error(w, "データ内部にアクセスできませんでした", http.StatusInternalServerError)
@@ -93,5 +94,32 @@ func (c *StudyTimerController) SelectStudyController(w http.ResponseWriter, r *h
 	}
 
 	json.NewEncoder(w).Encode(studydata)
+
+}
+
+func (c *StudyTimerController) SelectAllStudylogController(w http.ResponseWriter, r *http.Request) {
+
+	var reqdata []model.StudyLog
+	if err := json.NewDecoder(r.Body).Decode(&reqdata); err != nil {
+		http.Error(w, "読み込みエラーが生じました", http.StatusBadRequest)
+		return
+	}
+
+	limitStr := r.URL.Query().Get("limit")
+
+	if limitStr == "" {
+		limitStr = "10"
+	}
+
+	limit, _ := strconv.Atoi(limitStr)
+
+	studylog, err := c.service.SelectAllStudylogService(reqdata, limit)
+
+	if err != nil {
+		http.Error(w, "データ内部にアクセスできませんでした", http.StatusInternalServerError)
+		return
+	}
+
+	json.NewEncoder(w).Encode(studylog)
 
 }

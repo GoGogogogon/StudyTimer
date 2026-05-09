@@ -89,3 +89,32 @@ func SelectStudyData(db *sql.DB, log model.StudyLog) (model.StudyLog, error) {
 	return newlog, nil
 
 }
+
+func AllSelectStudyData(db *sql.DB, log []model.StudyLog, limit int) ([]model.StudyLog, error) {
+	//limitまでの学習データを取得
+	const allselectsql = `
+	select * from study_logs
+	limit ?
+	`
+
+	rows, err := db.Query(allselectsql, limit)
+
+	if err != nil {
+		return []model.StudyLog{}, err
+	}
+
+	defer rows.Close()
+
+	var loglist []model.StudyLog
+	// rowが終わるまでloglistにnewlogを追加
+	for rows.Next() {
+		var newlog model.StudyLog
+		if err := rows.Scan(&newlog.ID, &newlog.Title, &newlog.Time); err != nil {
+			return []model.StudyLog{}, err
+		}
+
+		loglist = append(loglist, newlog)
+	}
+
+	return loglist, nil
+}
