@@ -3,7 +3,9 @@ package service
 import "SmartStudyTimer/model"
 
 type MyStudyServicer interface {
-	//サービス層までのインタフェース
-	//リポジトリは本当のDB操作までしてしまうからやらない
+	//コントローラ―→サービス層　までのインタフェース
+	//コントローラ―→サービス→リポジトリだと
+	//本当のDB操作までしてしまう（テストが面倒）からやらない
+
 	PostStudyLogService(log model.StudyLog) (model.StudyLog, error)
 }

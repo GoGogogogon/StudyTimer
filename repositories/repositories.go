@@ -11,7 +11,7 @@ func SaveStudyDate(db *sql.DB, log model.StudyLog) (model.StudyLog, error) {
 
 	const InsertSQL = `
 	insert into study_logs (subject,study_time,created_time) values
-	(?,?,now());
+	(?,?,now())
 	`
 
 	result, err := db.Exec(InsertSQL, log.Title, log.Time)
@@ -33,9 +33,26 @@ func UpdateStudyData(db *sql.DB, log model.StudyLog) (model.StudyLog, error) {
 
 	const updatesql = `
 	update study_logs set subject = ? ,study_time = ?
-	where study_id = ? ;`
+	where study_id = ? 
+	`
 
 	_, err := db.Exec(updatesql, log.Title, log.Time, log.ID)
+
+	if err != nil {
+		return model.StudyLog{}, err
+	}
+
+	return log, nil
+}
+
+func DeleteStudyData(db *sql.DB, log model.StudyLog) (model.StudyLog, error) {
+
+	const deletesql = `
+	delete from study_logs 
+	where study_id = ?
+	 `
+
+	_, err := db.Exec(deletesql, log.ID)
 
 	if err != nil {
 		return model.StudyLog{}, err

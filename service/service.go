@@ -15,18 +15,27 @@ func NewMyStudyService(db *sql.DB) *MyStudyService {
 }
 
 func (s *MyStudyService) PostStudyLogService(log model.StudyLog) (model.StudyLog, error) {
-	newLog, err := repositories.SaveStudyDate(s.db, log)
+	newlog, err := repositories.SaveStudyDate(s.db, log)
 	if err != nil {
 		return model.StudyLog{}, err
 	}
 
-	return newLog, nil
+	return newlog, nil
 }
 
 func (s *MyStudyService) UpdateStudyLogService(log model.StudyLog) (model.StudyLog, error) {
-	newLog, err := repositories.UpdateStudyData(s.db, log)
+	newlog, err := repositories.UpdateStudyData(s.db, log)
 	if err != nil {
 		return model.StudyLog{}, err
 	}
-	return newLog, err
+	return newlog, nil
+}
+
+func (s *MyStudyService) DeleteStudyLogService(log model.StudyLog) (model.StudyLog, error) {
+	newlog, err := repositories.DeleteStudyData(s.db, log)
+	if err != nil {
+		return model.StudyLog{}, err
+	}
+
+	return newlog, nil
 }

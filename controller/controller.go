@@ -56,3 +56,22 @@ func (c *StudyTimerController) UpdateController(w http.ResponseWriter, r *http.R
 
 	json.NewEncoder(w).Encode(studylog)
 }
+
+func (c *StudyTimerController) DeleteController(w http.ResponseWriter, r *http.Request) {
+
+	var reqdata model.StudyLog
+
+	if err := json.NewDecoder(r.Body).Decode(&reqdata); err != nil {
+		http.Error(w, "読み込みエラーが生じました", http.StatusBadRequest)
+		return
+	}
+
+	studylog, err := c.service.DeleteStudyLogService(reqdata)
+
+	if err != nil {
+		http.Error(w, "データ内部に入れませんでした", http.StatusInternalServerError)
+		return
+	}
+
+	json.NewEncoder(w).Encode(studylog)
+}
