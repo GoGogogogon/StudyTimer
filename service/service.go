@@ -31,24 +31,24 @@ func (s *MyStudyService) UpdateStudyLogService(log model.StudyLog) (model.StudyL
 	return newlog, nil
 }
 
-func (s *MyStudyService) DeleteStudyLogService(log model.StudyLog) (model.StudyLog, error) {
-	newlog, err := repositories.DeleteStudyData(s.db, log)
+func (s *MyStudyService) DeleteStudyLogService(id int) (model.StudyLog, error) {
+	newlog, err := repositories.DeleteStudyData(s.db, id)
 	if err != nil {
 		return model.StudyLog{}, err
 	}
 	return newlog, nil
 }
 
-func (s *MyStudyService) SelectStudyLogService(log model.StudyLog) (model.StudyLog, error) {
-	newlog, err := repositories.SelectStudyData(s.db, log)
+func (s *MyStudyService) SelectStudyLogService(id int) (model.StudyLog, error) {
+	newlog, err := repositories.SelectStudyData(s.db, id)
 	if err != nil {
 		return model.StudyLog{}, err
 	}
 	return newlog, nil
 }
 
-func (s *MyStudyService) SelectAllStudylogService(log []model.StudyLog, limit int) ([]model.StudyLog, error) {
-	loglist, err := repositories.AllSelectStudyData(s.db, log, limit)
+func (s *MyStudyService) SelectAllStudylogService(limit int) ([]model.StudyLog, error) {
+	loglist, err := repositories.AllSelectStudyData(s.db, limit)
 	if err != nil {
 		return []model.StudyLog{}, err
 	}

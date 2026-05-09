@@ -11,7 +11,7 @@ type MyStudyServicer interface {
 
 	PostStudyLogService(log model.StudyLog) (model.StudyLog, error)
 	UpdateStudyLogService(log model.StudyLog) (model.StudyLog, error)
-	DeleteStudyLogService(log model.StudyLog) (model.StudyLog, error)
-	SelectStudyLogService(log model.StudyLog) (model.StudyLog, error)
-	SelectAllStudylogService(log []model.StudyLog, limit int) ([]model.StudyLog, error)
+	DeleteStudyLogService(id int) (model.StudyLog, error)
+	SelectStudyLogService(id int) (model.StudyLog, error)
+	SelectAllStudylogService(limit int) ([]model.StudyLog, error)
 }

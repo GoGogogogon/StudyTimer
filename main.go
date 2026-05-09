@@ -18,7 +18,7 @@ var (
 
 	dbpass = os.Getenv("USERPASS")
 
-	dbConn = fmt.Sprintf("%s:%s@tcp(127.0.0.3306)%s?parseTime=true", dbname, dbUser, dbpass)
+	dbConn = fmt.Sprintf("%s:%s@tcp(127.0.0.1:3307)/%s?parseTime=true", dbUser, dbpass, dbname)
 )
 
 func main() {
@@ -27,23 +27,16 @@ func main() {
 
 	if err != nil {
 		log.Println("データベースに接続できません")
+		return
 	}
 
 	defer db.Close()
 
-	if err != nil {
-		log.Fatal("接続失敗", err)
-	}
-
 	r := api.NewRouter(db)
-
-	if err != nil {
-		log.Fatal("テーブル作成失敗:", err)
-	}
 
 	err = http.ListenAndServe(":8080", r)
 	if err != nil {
 		log.Fatal("サーバー起動失敗:", err)
 	}
-	log.Fatal(err)
+
 }

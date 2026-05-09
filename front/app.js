@@ -55,7 +55,7 @@ const studyTimer = {
         this.savelog(input_data);
         this.rest();
       }
-    }, 10);
+    }, 1000);
   },
 
   // タイマーを止めるメソッド
@@ -99,7 +99,7 @@ const studyTimer = {
         display_time.textContent = "お疲れさまでした！";
         clearInterval(this.timerInterval);
       }
-    }, 10);
+    }, 1000);
   },
 
   async savelog(input_data) {
@@ -110,7 +110,7 @@ const studyTimer = {
     studylog.append(input_data.value);
 
     try {
-      const response = await fetch("/api/save", {
+      const response = await fetch("/api/studylogs", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

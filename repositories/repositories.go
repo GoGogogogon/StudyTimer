@@ -45,14 +45,15 @@ func UpdateStudyData(db *sql.DB, log model.StudyLog) (model.StudyLog, error) {
 	return log, nil
 }
 
-func DeleteStudyData(db *sql.DB, log model.StudyLog) (model.StudyLog, error) {
+func DeleteStudyData(db *sql.DB, id int) (model.StudyLog, error) {
 
 	const deletesql = `
 	delete from study_logs 
 	where study_id = ?
 	 `
 
-	_, err := db.Exec(deletesql, log.ID)
+	var log model.StudyLog
+	_, err := db.Exec(deletesql, id)
 
 	if err != nil {
 		return model.StudyLog{}, err
@@ -61,7 +62,7 @@ func DeleteStudyData(db *sql.DB, log model.StudyLog) (model.StudyLog, error) {
 	return log, nil
 }
 
-func SelectStudyData(db *sql.DB, log model.StudyLog) (model.StudyLog, error) {
+func SelectStudyData(db *sql.DB, id int) (model.StudyLog, error) {
 	//指定したIDのデータを返す関数
 	const selectsql = `
 	select * from study_logs
@@ -69,13 +70,9 @@ func SelectStudyData(db *sql.DB, log model.StudyLog) (model.StudyLog, error) {
 	`
 
 	//指定したIDの一行データ
-	row := db.QueryRow(selectsql, log.ID)
+	row := db.QueryRow(selectsql, id)
 
-	if err := row.Err(); err != nil {
-		return model.StudyLog{}, err
-	}
-
-	var newlog model.StudyLog
+	var log model.StudyLog
 	var createdtime sql.NullTime
 
 	if err := row.Scan(&log.ID, &log.Title, &log.Time, &createdtime); err != nil {
@@ -86,11 +83,10 @@ func SelectStudyData(db *sql.DB, log model.StudyLog) (model.StudyLog, error) {
 		log.CreatedAt = createdtime.Time
 	}
 
-	return newlog, nil
-
+	return log, nil
 }
 
-func AllSelectStudyData(db *sql.DB, log []model.StudyLog, limit int) ([]model.StudyLog, error) {
+func AllSelectStudyData(db *sql.DB, limit int) ([]model.StudyLog, error) {
 	//limitまでの学習データを取得
 	const allselectsql = `
 	select * from study_logs
@@ -109,7 +105,8 @@ func AllSelectStudyData(db *sql.DB, log []model.StudyLog, limit int) ([]model.St
 	// rowが終わるまでloglistにnewlogを追加
 	for rows.Next() {
 		var newlog model.StudyLog
-		if err := rows.Scan(&newlog.ID, &newlog.Title, &newlog.Time); err != nil {
+		var createdtime sql.NullTime
+		if err := rows.Scan(&newlog.ID, &newlog.Title, &newlog.Time, &createdtime); err != nil {
 			return []model.StudyLog{}, err
 		}
 

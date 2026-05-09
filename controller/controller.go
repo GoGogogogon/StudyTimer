@@ -36,6 +36,7 @@ func (c *StudyTimerController) SaveController(w http.ResponseWriter, r *http.Req
 		return
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(studyLog)
 
 }
@@ -57,25 +58,27 @@ func (c *StudyTimerController) UpdateController(w http.ResponseWriter, r *http.R
 		return
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(studylog)
 }
 
 func (c *StudyTimerController) DeleteController(w http.ResponseWriter, r *http.Request) {
 
-	var reqdata model.StudyLog
+	data, err := strconv.Atoi(mux.Vars(r)["id"])
 
-	if err := json.NewDecoder(r.Body).Decode(&reqdata); err != nil {
-		http.Error(w, "読み込みエラーが生じました", http.StatusBadRequest)
+	if err != nil {
+		http.Error(w, "整数値である必要があります", http.StatusBadRequest)
 		return
 	}
 
-	studylog, err := c.service.DeleteStudyLogService(reqdata)
+	studylog, err := c.service.DeleteStudyLogService(data)
 
 	if err != nil {
 		http.Error(w, "データ内部に入れませんでした", http.StatusInternalServerError)
 		return
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(studylog)
 }
 
@@ -83,43 +86,44 @@ func (c *StudyTimerController) SelectStudylogController(w http.ResponseWriter, r
 
 	data, err := strconv.Atoi(mux.Vars(r)["id"])
 	if err != nil {
-		http.Error(w, "読み込みエラーが生じました", http.StatusBadRequest)
+		http.Error(w, "整数値である必要があります", http.StatusBadRequest)
 		return
 	}
 
-	reqdata, err := c.service.SelectStudyLogService(data)
+	result, err := c.service.SelectStudyLogService(data)
 
 	if err != nil {
 		http.Error(w, "データ内部にアクセスできませんでした", http.StatusInternalServerError)
 		return
 	}
-	json.NewEncoder(w).Encode(reqdata)
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(result)
 
 }
 
 func (c *StudyTimerController) SelectAllStudylogController(w http.ResponseWriter, r *http.Request) {
-
-	var reqdata []model.StudyLog
-	if err := json.NewDecoder(r.Body).Decode(&reqdata); err != nil {
-		http.Error(w, "読み込みエラーが生じました", http.StatusBadRequest)
-		return
-	}
 
 	limitStr := r.URL.Query().Get("limit")
 
 	if limitStr == "" {
 		limitStr = "10"
 	}
+	limit, err := strconv.Atoi(limitStr)
 
-	limit, _ := strconv.Atoi(limitStr)
+	if err != nil {
+		http.Error(w, "整数値にする必要があります", http.StatusBadRequest)
+		return
+	}
 
-	studylog, err := c.service.SelectAllStudylogService(reqdata, limit)
+	studylog, err := c.service.SelectAllStudylogService(limit)
 
 	if err != nil {
 		http.Error(w, "データ内部にアクセスできませんでした", http.StatusInternalServerError)
 		return
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(studylog)
 
 }
