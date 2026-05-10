@@ -109,6 +109,7 @@ func (c *StudyTimerController) SelectAllStudylogController(w http.ResponseWriter
 	if limitStr == "" {
 		limitStr = "10"
 	}
+
 	limit, err := strconv.Atoi(limitStr)
 
 	if err != nil {
